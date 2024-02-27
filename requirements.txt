@@ -1,0 +1,7 @@
+streamlit_option_menu==0.3.2
+matplotlib
+streamlit_option_menu
+wordcloud==1.8.2.2
+pandas
+joblib==1.2.0
+scikit-learn

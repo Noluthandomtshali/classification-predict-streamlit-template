@@ -51,8 +51,8 @@ def main():
 	# you can create multiple pages this way
 
 	with st.sidebar:
-		selection = option_menu("Main Menu", ["Prediction", 'visualisation', 'About the Project'], 
-        icons=['house', 'pie-chart','envelope'], menu_icon="cast", default_index=0)
+		selection = option_menu("Main Menu", ["Prediction", 'visualisation', 'Development team','About the Project'], 
+        icons=['house', 'pie-chart','people-fill','envelope'], menu_icon="cast", default_index=0)
 
 	#options = ["Prediction", "Information"]
 	#selection = st.sidebar.selectbox("Choose Option", options)
@@ -61,20 +61,26 @@ def main():
 
 	# Building out the predication page
 	if selection == "Prediction":
-		st.info("Prediction with ML Models")
+		st.info("Here you can choose one of our models")
 		# Creating a text box for user input
-		mod = st.radio('Choose model:',['Support Vector Machine', 'Naive-Baise'])
+		mod = st.radio('Choose model:',[ 'Naive-Baise','Logistics Regression','SVC-Linear','SVC-Poly','SVC-Gemma'])
 		tweet_text = st.text_area("Enter Text","Type Here")
-
+		
 		if st.button("Classify"):
 			# Transforming user input with vectorizer
 			vect_text = tweet_cv.transform([tweet_text]).toarray()
 			# Load your .pkl file with the model of your choice + make predictions
 			# Try loading in multiple models to give the user a choice
-			if mod=='Support Vector Machine':
+			if mod=='SVC-Linear':
 				predictor = joblib.load(open(os.path.join("resources/model_svc.pkl"),"rb"))
 			elif mod=='Naive-Baise':
 				predictor = joblib.load(open(os.path.join("resources/nb.pkl"),"rb"))
+			elif mod=='Logistics Regression':
+				predictor = joblib.load(open(os.path.join("resources/model_logistic.pkl"),"rb"))
+			elif mod=='SVC-Poly':
+				predictor = joblib.load(open(os.path.join("resources/svc_poly.pkl"),"rb"))
+			elif mod=='SVC-Gemma':
+				predictor = joblib.load(open(os.path.join("resources/svc_gemma.pkl"),"rb"))
 
 
 			prediction = predictor.predict(vect_text)
@@ -138,6 +144,45 @@ def main():
 		st.write('')
 		st.write('Providing an accurate and robust solution to this task gives companies access to a broad base of consumer sentiment, spanning multiple demographic and geographic categories - thus increasing their insights and informing future marketing strategies.')
 
+	if selection == "Development team":
+		st.title("Meet our team")
+		st.title("")
+		col1, mid, col2 = st.columns([80,10,80])
+		with col2:
+			st.subheader("Makambi-Project Manager")
+			st.write("Makhambi has worked as a Project Manager, Product Manager, Systems and Production developer. When he is not coding he enjoys watching sport on television.")
+		with col1:
+			st.image('Makhambi.webp', width=380)
+		col1, mid, col2 = st.columns([80,10,80])
+		with col1:
+			st.subheader("Koketsho - Data Scienstist")
+			st.write("Koketsho has worked as a data scientist for various companies including Netflix and Apple to name a few. In her spare time she likes to spend time with family and watch football")
+		with col2:
+			st.image('Koketsho.webp', width=380)		
+
+
+		col1, mid, col2 = st.columns([80,10,80])
+		with col2:
+			st.subheader("Onkarabile- Machine learning engineer")
+			st.write("She has designed predicted models for companies such as FNB and BMW. One of my project was creating a chatbot with Python's NTLK library.She is a fitness fanatic and loves dancing ")
+
+		with col1:
+			st.image('Onkarabile.webp', width=380)
+		
+		col1, mid, col2 = st.columns([80,10,80])
+		with col1:
+			st.subheader("Ngcebo- Data Analyst")
+			st.write("Ngcebo is a data Analyst Intern, participated on four of our outstanding projects thus far. He enjoys indoor atmosphere and on his spare time he plays puzzle video games")
+
+		with col2:
+			st.image('Ngcebo.webp', width=380)
+
+		col1, mid, col2 = st.columns([80,10,80])
+		with col2:
+			st.subheader("Noluthando - App developer")
+			st.write("Noluthando has worked as an App developer on multiple project with different companies like Paypal, showmax just to name a few. On her spare time she likes watching movies and playing video games")
+		with col1:
+			st.image('Luthando.jpg', width=380)
 
 # Required to let Streamlit instantiate our web app.  
 if __name__ == '__main__':
